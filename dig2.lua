@@ -1,7 +1,7 @@
 --[[
 
 ==============
-roachhole.lua
+dig2.lua
 v1.1
 by Roachy
 ==============
@@ -28,7 +28,7 @@ Plans
 ------
 	- Add option to discard cobble/stone
 	- Add failure recovery techniques (e.g. can't hover high enough so move to wall)
-	- Add ability to specify where on the outskirts of the dig the chest and/or power station are located
+	- Add ability to specify where on the outskirts of the dig the chest and/or charger block are located
 	- Re-implement logic to continue next layer without returning to origin corner (temporarily removed for simplicity)
 	- Add/overhaul argument parsing logic
 	- Add ability to refuel via generator upgrade if present
