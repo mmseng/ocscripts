@@ -1,6 +1,6 @@
 local arg = { ... }
 local file = arg[1] .. ".lua"
-local url = "http://www.theroach.net/minecraft/ocscripts/" .. file
+local url = "https://raw.githubusercontent.com/mmseng/ocscripts/master/" .. file
 local path = "/home/" .. file
 
 local shell = require("shell")
