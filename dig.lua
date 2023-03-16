@@ -35,7 +35,7 @@ Plans
 	- Add check for chunk loading upgrade, and disable it after completing the dig
 	- Add more compatibility checks for various components and upgrades
 	- Improve usage message formatting or font size to better fit screen
-	- Fix bug: robot dumped inventory, returned to y=4, x=23, z=4, f=2, finished digging layers 4-6, then hovered through layer 6 without digging layer 7 (final layer), but thought it was
+	- Fix bug: robot dumped inventory, returned to y=4, x=23, z=4, f=2, finished digging layers 4-6, then hovered through layer 6 without digging layer 7, but thought it did. Dig was 27x27x7.
 	
 ------
 Usage
