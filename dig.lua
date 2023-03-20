@@ -148,12 +148,11 @@ local maxHeight = 256 -- Max height of world, for use with options that dig maxi
 --===========
 
 -- Log
-local function log(msg, level)
-	level = level or 0
+local function log(msg, level=0)
 	indent = ""
-	for(i = 0; i < level; i += 1) {
+	for i = 0, level do {
 		indent = indent .. "	"
-	}
+	end
 	ts = os.time("%Y-%m-%d %H:%M:%S")
 	newMsg = "[" .. ts .. "] " .. indent .. msg
 	io.write(newMsg)
@@ -161,7 +160,7 @@ end
 
 -- Print usage
 local function usage()
-	log("Usage:\n", 0)
+	log("Usage:\n")
 	log("	dig [-s] <depth> <width> <height>\n")
 	log("	dig [-s] -j <depth> <width> <height> <jump_to>\n")
 	log("	dig [-s] -C <cubic_size>\n")
