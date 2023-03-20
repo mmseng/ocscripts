@@ -149,11 +149,11 @@ local maxHeight = 256 -- Max height of world, for use with options that dig maxi
 
 -- Log
 local function log(msg, level)
-	level = level or 0
-	indent = ""
-	for i = 0, level do
-		indent = indent .. "	"
-	end
+	--level = level or 0
+	--indent = ""
+	--for i = 0, level do
+	--	indent = indent .. "	"
+	--end
 	ts = os.time("%Y-%m-%d %H:%M:%S")
 	newMsg = "[" .. ts .. "] " .. indent .. msg
 	io.write(newMsg)
