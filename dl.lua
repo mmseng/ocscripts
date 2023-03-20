@@ -1,5 +1,5 @@
 local arg = { ... }
-local file = arg[1] .. ".lua"
+local file = arg[1]
 local url = "https://raw.githubusercontent.com/mmseng/ocscripts/master/" .. file
 local path = "/home/" .. file
 
