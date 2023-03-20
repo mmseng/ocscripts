@@ -4,9 +4,10 @@ end
 
 local c = require("component")
 local cl = c.chunkloader
-
-local state = cl.isActive()
+local state
 local newState
+
+state = cl.isActive()
 if state then
 	log("Chunkloader is currently active. Setting to inactive...")
 	cl.setActive(false)
@@ -17,7 +18,7 @@ if state then
 		log("	Successfully set chunkloader to inactive.")
 	end
 else
-	log("Chunkloader is currently inactive. Setting to active..."
+	log("Chunkloader is currently inactive. Setting to active...")
 	cl.setActive(true)
 	newState = cl.isActive()
 	if newState then
