@@ -12,17 +12,17 @@ if state then
 	cl.setActive(false)
 	newState = cl.isActive()
 	if newState then
-		log("Failed to set chunkloader to inactive!")
+		log("	Failed to set chunkloader to inactive!")
 	else
-		log("Successfully set chunkloader to inactive.")
+		log("	Successfully set chunkloader to inactive.")
 	end
 else
 	log("Chunkloader is current inactive. Setting to active..."
 	cl.setActive(true)
 	newState = cl.isActive()
 	if newState then
-		log("Successfully set chunkloader to active.")
+		log("	Successfully set chunkloader to active.")
 	else
-		log("Failed to set chunkloader to active!")
+		log("	Failed to set chunkloader to active!")
 	end
 end
