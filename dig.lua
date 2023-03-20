@@ -147,47 +147,58 @@ local maxHeight = 256 -- Max height of world, for use with options that dig maxi
 -- Functions
 --===========
 
+-- Log
+local function log(msg, level=0)
+	indent = ""
+	for(i = 0; i < level; i += 1) {
+		indent = indent .. "	"
+	}
+	ts = os.time("%Y-%m-%d %H:%M:%S")
+	newMsg = "[" .. ts .. "] " .. indent .. msg
+	io.write(newMsg)
+end
+
 -- Print usage
 local function usage()
-	io.write("Usage:\n")
-	io.write("	dig [-s] <depth> <width> <height>\n")
-	io.write("	dig [-s] -j <depth> <width> <height> <jump_to>\n")
-	io.write("	dig [-s] -C <cubic_size>\n")
-	io.write("	dig [-s] -S <square_size>\n")
-	io.write("\n")
+	log("Usage:\n")
+	log("	dig [-s] <depth> <width> <height>\n")
+	log("	dig [-s] -j <depth> <width> <height> <jump_to>\n")
+	log("	dig [-s] -C <cubic_size>\n")
+	log("	dig [-s] -S <square_size>\n")
+	log("\n")
 	
-	io.write("Examples:\n")
-	io.write("	dig 7 11 5\n")
-	io.write("	dig -sj 7 11 5 4\n")
-	io.write("	dig -s -C 9\n")
-	io.write("\n")
+	log("Examples:\n")
+	log("	dig 7 11 5\n")
+	log("	dig -sj 7 11 5 4\n")
+	log("	dig -s -C 9\n")
+	log("\n")
 	
-	io.write("Options:\n")
-	io.write("	-s: Shutdown when done.\n")
-	io.write("		Compatible with all other options.\n")
-	io.write("	-j: Jump to the layer specified by <jump_to> within the area specified by the other 3 arguments (all required) and dig onward from there.\n")
-	io.write("		e.g. if <jump_to> is 5 the robot will move to layer 6 and start digging layers 5, 6, and 7 (unless <height> is less than 6 or 7).\n")
-	io.write("		Not compatible with -S or -C.\n")
-	io.write("	-S: Dig a square of size <square_size> to bedrock.\n")
-	io.write("		Actually digs down a number of layers equal to the maximum world height configured via the maxHeight variable (currently " .. maxHeight .."), until hitting bedrock.\n")
-	io.write("		Not compatible with -j or -C.\n")
-	io.write("	-C: Dig a cube of size <cubic_size>.\n")
-	io.write("		Not compatible with -j or -S.\n")
-	io.write("	Note: options can be specified together or separately. See examples.\n")
-	io.write("\n")
+	log("Options:\n")
+	log("	-s: Shutdown when done.\n")
+	log("		Compatible with all other options.\n")
+	log("	-j: Jump to the layer specified by <jump_to> within the area specified by the other 3 arguments (all required) and dig onward from there.\n")
+	log("		e.g. if <jump_to> is 5 the robot will move to layer 6 and start digging layers 5, 6, and 7 (unless <height> is less than 6 or 7).\n")
+	log("		Not compatible with -S or -C.\n")
+	log("	-S: Dig a square of size <square_size> to bedrock.\n")
+	log("		Actually digs down a number of layers equal to the maximum world height configured via the maxHeight variable (currently " .. maxHeight .."), until hitting bedrock.\n")
+	log("		Not compatible with -j or -C.\n")
+	log("	-C: Dig a cube of size <cubic_size>.\n")
+	log("		Not compatible with -j or -S.\n")
+	log("	Note: options can be specified together or separately. See examples.\n")
+	log("\n")
 	
-	io.write("Arguments:\n")
-	io.write("	<depth>: The horizontal forward distance to dig (in the direction robot is facing when placed).\n")
-	io.write("	<width>: The horizontal rightward distance to dig (as seen from above, the robot starts off in the bottom of the leftmost \"column\").\n")
-	io.write("	<height>: The vertical (x) distance to dig downward (most energy efficient if divisible by 3).\n")
-	io.write("	<jump_to>: If option -j is given, the robot will move to this layer and dig onward from there.\n")
-	io.write("	<square_size>: If option -S is given, this value is used for <depth> and <width>. <height> is set to the max world height (configurable via maxHeight variable).\n")
-	io.write("	<cubic_size>: If option -C is given, this value is used for <depth>, <width>, and <height>.\n")
-	io.write("\n")
+	log("Arguments:\n")
+	log("	<depth>: The horizontal forward distance to dig (in the direction robot is facing when placed).\n")
+	log("	<width>: The horizontal rightward distance to dig (as seen from above, the robot starts off in the bottom of the leftmost \"column\").\n")
+	log("	<height>: The vertical (x) distance to dig downward (most energy efficient if divisible by 3).\n")
+	log("	<jump_to>: If option -j is given, the robot will move to this layer and dig onward from there.\n")
+	log("	<square_size>: If option -S is given, this value is used for <depth> and <width>. <height> is set to the max world height (configurable via maxHeight variable).\n")
+	log("	<cubic_size>: If option -C is given, this value is used for <depth>, <width>, and <height>.\n")
+	log("\n")
 	
-	io.write("Robot placement:\n")
-	io.write("	See comments at top of script.\n")
-	io.write("\n")
+	log("Robot placement:\n")
+	log("	See comments at top of script.\n")
+	log("\n")
 end
 
 -- Turn right and track the direction we're facing
@@ -339,7 +350,7 @@ local function isEnergyFull()
 end
 
 local function dropAll()
-	io.write("Dropping inventory...")
+	log("Dropping inventory...")
 	for slot = 1, 16 do
 		if robot.count(slot) > 0 then
 			robot.select(slot)
@@ -353,18 +364,18 @@ local function dropAll()
 		end
 	end
 	robot.select(1)
-	io.write(" done.\n")
+	log(" done.\n")
 end
 
 local function returnHome()
 	returningHome = true
-	io.write("Returning home...\n")
+	log("Returning home...\n")
 	
 	if not moveTo(0, 0, 0) then
-		io.write("Error: Failed returning home.\n")
+		log("Error: Failed returning home.\n")
 		return false
 	else	
-		io.write("Finished returning home.\n")
+		log("Finished returning home.\n")
 	end
 	
 	-- Drop off inventory
@@ -373,11 +384,11 @@ local function returnHome()
 	turnTowards(0)
 	
 	-- Wait for energy to charge
-	io.write("Waiting to charge...")
+	log("Waiting to charge...")
 	while not isEnergyFull() do
 		os.sleep(1)
 	end
-	io.write(" done.\n")
+	log(" done.\n")
 	
 	returningHome = false
 	return true
@@ -393,13 +404,13 @@ function homeAndBack()
 	end
 
 	-- Return to mining at saved position
-	io.write("Returning to y=" .. oy .. ", x=" .. ox .. ", z=" .. oz .. ", f=" .. of .. "...\n")
+	log("Returning to y=" .. oy .. ", x=" .. ox .. ", z=" .. oz .. ", f=" .. of .. "...\n")
 	if not moveTo(oy, ox, oz, true) then
 		io.stderr:write("Error: Failed to return to position.\n")
 		return false
 	else
 		turnTowards(of)
-		io.write("Returned to position.\n")
+		log("Returned to position.\n")
 	end
 	return true
 end
@@ -415,7 +426,7 @@ function needDrop()
 	end
 	
 	if (emptySlots < 1) then
-		io.write("Drop needed, no free inventory slots.\n")
+		log("Drop needed, no free inventory slots.\n")
 		return true
 	end
 	
@@ -429,7 +440,7 @@ function needEnergy()
 	
 	-- If remaining energy is at or below the minimum amount of energy we want to have in reserve
 	if(energy <= minEnergyReserve) then
-		io.write("Energy needed. Current: " .. energy.. "/" .. maxEnergy .. ", needed: " .. maxEnergyNeededToReturnHome .. ", preferred reserve: " .. minEnergyReserve .. ".\n")
+		log("Energy needed. Current: " .. energy.. "/" .. maxEnergy .. ", needed: " .. maxEnergyNeededToReturnHome .. ", preferred reserve: " .. minEnergyReserve .. ".\n")
 		return true
 	end
 	return false
@@ -452,7 +463,7 @@ local function calculateEnergyNeeds()
 	-- This should give us a reasonably conservative estimate for energy required per block move.
 	
 	local maxDistToReturnHome = width + depth + height
-	io.write("Max distance to home calculated as: " .. maxDistToReturnHome .. ".\n")
+	log("Max distance to home calculated as: " .. maxDistToReturnHome .. ".\n")
 	
 	-- energyUsedToMove should conservatively be the actual maximum,
 	-- to account for when the robot is at the end of the dig
@@ -466,10 +477,10 @@ local function calculateEnergyNeeds()
 	energyUsedToBreakBlocks = energyUsedToBreakBlocks * avgBlocksBrokenPerMove
 		
 	maxEnergyNeededToReturnHome = energyUsedToMove + energyUsedToBreakBlocks	
-	io.write("Max energy needed to return home calculated as: " .. maxEnergyNeededToReturnHome .. "/" .. maxEnergy .. ".\n")
+	log("Max energy needed to return home calculated as: " .. maxEnergyNeededToReturnHome .. "/" .. maxEnergy .. ".\n")
 	
 	minEnergyReserve = (maxEnergy * minEnergyReserveBuffer) + maxEnergyNeededToReturnHome
-	io.write("Min energy reserve to keep calculated as: " .. minEnergyReserve .. "/" .. maxEnergy .. ".\n")
+	log("Min energy reserve to keep calculated as: " .. minEnergyReserve .. "/" .. maxEnergy .. ".\n")
 end
 
 -- Advance one space
@@ -596,11 +607,11 @@ local function digLayers()
 			if((height < 2) or (justJumped)) then
 				justJumped = false
 				-- stay in starting position
-				--io.write("This is the only layer, staying on this layer.\n")
+				--log("This is the only layer, staying on this layer.\n")
 			-- If this is not the only layer
 			else
 				-- move down into the final layer
-				--io.write("Only one layer left, moving to last layer.\n")
+				--log("Only one layer left, moving to last layer.\n")
 				if not tryMove(sides.down) then
 					io.stderr:write("Error: Failed to move into position for new layer (1).\n")
 					return false
@@ -608,7 +619,7 @@ local function digLayers()
 			end
 			
 			-- Dig a 1-tall layer at current height, ignoring layers above and below
-			io.write("Digging 1-tall layer (#" .. currentLayer .. ")...\n")
+			log("Digging 1-tall layer (#" .. currentLayer .. ")...\n")
 			if not digLayer(1) then
 				io.stderr:write("Error: Could not complete 1-tall layer (#" .. currentLayer .. ").\n")
 				return false
@@ -622,12 +633,12 @@ local function digLayers()
 			if((height < 3) or (justJumped)) then
 				justJumped = false
 				-- stay in starting position
-				--io.write("These are the only two layers, staying on this layer.\n")
+				--log("These are the only two layers, staying on this layer.\n")
 			
 			-- If these are not the only two layers
 			else
 				-- move down into the first of the two final layers
-				--io.write("Only two layers left, moving to the first of the two layers.\n")
+				--log("Only two layers left, moving to the first of the two layers.\n")
 				if not tryMove(sides.down) then
 					io.stderr:write("Error: Failed to move into position for new layer (2).\n")
 					return false
@@ -635,7 +646,7 @@ local function digLayers()
 			end
 			
 			-- Dig a 2-tall layer at current height, ignoring the layer above
-			io.write("Digging 2-tall layer (#" .. currentLayer .. "-" .. (currentLayer + 1) .. ")...\n")
+			log("Digging 2-tall layer (#" .. currentLayer .. "-" .. (currentLayer + 1) .. ")...\n")
 			if not digLayer(2) then
 				io.stderr:write("Error: Could not complete 2-tall layer (#" .. currentLayer .. "-" .. (currentLayer + 1) .. ")...\n")
 				return false
@@ -649,7 +660,7 @@ local function digLayers()
 				justJumped = false
 
 				-- move down into the middle layer
-				--io.write("These are the first three layers, moving to the middle layer.\n")
+				--log("These are the first three layers, moving to the middle layer.\n")
 				if not tryMove(sides.down) then
 					io.stderr:write("Error: Failed to move into position for new layer (3).\n")
 					return false
@@ -659,7 +670,7 @@ local function digLayers()
 			else
 			
 				-- move down further into the actual middle layer
-				--io.write("Three or more layers left, moving to the middle layer.\n")
+				--log("Three or more layers left, moving to the middle layer.\n")
 				for i = 1, 3 do
 					if not tryMove(sides.down) then
 						io.stderr:write("Error: Failed to move into position for new layer (4).\n")
@@ -669,7 +680,7 @@ local function digLayers()
 			end
 			
 			-- Dig a 3-tall layer at current height, including the layers above and below
-			io.write("Digging 3-tall layer (#" .. currentLayer .. "-" .. (currentLayer + 2) .. ")...\n")
+			log("Digging 3-tall layer (#" .. currentLayer .. "-" .. (currentLayer + 2) .. ")...\n")
 			if not digLayer() then
 				io.stderr:write("Error: Could not complete 3-tall layer (#" .. currentLayer .. "-" .. (currentLayer + 2) .. ")...\n")
 				return false
@@ -678,7 +689,7 @@ local function digLayers()
 		end
 		
 		layersLeft = height - layersDug
-		io.write("Done digging layer(s). " .. layersDug .. " layers dug total. " .. layersLeft .. "/" .. height .. " layers left.\n")
+		log("Done digging layer(s). " .. layersDug .. " layers dug total. " .. layersLeft .. "/" .. height .. " layers left.\n")
 	end
 	return true
 end
@@ -723,7 +734,7 @@ local function parseArgs()
 		end
 		height = tonumber(args[3])
 		if not height then
-			io.write("Invalid or null value for <height>, setting to max height (" .. maxHeight .. ").\n")
+			log("Invalid or null value for <height>, setting to max height (" .. maxHeight .. ").\n")
 			height = maxHeight
 		else
 			if options.j then
@@ -787,6 +798,6 @@ returnHome()
 
 -- Shutdown if specified
 if options.s then
-	io.write("Shutting down...\n")
+	log("Shutting down...\n")
 	computer.shutdown()
 end
