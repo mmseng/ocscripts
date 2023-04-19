@@ -4,7 +4,7 @@ local sides = require("sides")
 local r = component.robot
 
 local function log(msg)
-	io.write(msg)
+	io.write(msg .. "\n")
 end
 
 function needDrop()
