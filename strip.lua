@@ -35,7 +35,7 @@ local function dropAll()
 end
 
 while(true) do
-	r.swing(3)
+	r.suck(3)
 	
 	if(needDrop()) then
 		dropAll()
