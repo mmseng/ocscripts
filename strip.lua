@@ -15,8 +15,8 @@ while(true) do
 		log("    Sucking...")
 		r.suck(sides.forward)
 		log("    Dropping slot " .. slot .. "...")
-		r.select(slot)
-		r.dropDown()
+		robot.select(slot)
+		robot.dropDown()
 	end
 	log("Done with loop iteration.")
 end
